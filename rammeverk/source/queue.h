@@ -11,7 +11,6 @@ typedef enum state_machine {
 } elev_state_t;
 
 
-void queue_add_to_queue();
 
 void queue_remove_from_queue();
 
@@ -22,3 +21,7 @@ bool queue_check_orders_below();
 int queue_next_action(int direction);
 
 bool queue_check_floor(int direction);
+
+void queue_reset_queue();
+
+bool queue_add_to_queue(int last_floor);

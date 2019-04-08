@@ -24,77 +24,64 @@ int main() {
 
     int state = 0;
     int direction = 0;
+    int last_Floor = 0;
 
     while(1){
         
         
         switch (state) {
             case IDLE:
-               queue_add_to_queue();
+               last_Floor = orders_update_last_Floor(last_Floor);
+               if(queue_add_to_queue(last_Floor) && (elev_get_floor_sensor_signal() != -1)){
+                   state = REACHED_FLOOR;
+               }
                direction = queue_next_action(direction);
                if(direction!=0){
                    state = ELEV_MOVE;
                }
+               if (orders_set_stop()) {
+                     state = STOP_PRESSED;           
+                }
                 break;
         
             case ELEV_MOVE:
                 orders_start_elev(direction);
-                queue_add_to_queue();
+                queue_add_to_queue(last_Floor);
                 set_floor_light();
+                last_Floor = orders_update_last_Floor(last_Floor);
                 if(queue_check_floor(direction)){
                     state = REACHED_FLOOR;
+                }
+                if (orders_set_stop()) {
+                     state = STOP_PRESSED;          
                 }
                 break;
 
             case REACHED_FLOOR:
                 elev_set_motor_direction(DIRN_STOP);
                 queue_remove_from_queue();
-                orders_open_door();
+                orders_open_door(last_Floor);
                 state = IDLE;
+                if (orders_set_stop()) {
+                     state = STOP_PRESSED;       
+                }
                 break;
 
             case STOP_PRESSED:
+                elev_set_motor_direction(DIRN_STOP);
+                direction = 0;
+                queue_reset_queue();
+                orders_reset_stop();
+                state = IDLE;
+                if (orders_set_stop()) {
+                     state = STOP_PRESSED;           
+                }
                 break;
         }
         
-
-        // Stop elevator and exit program if the stop button is pressed
-        if (orders_set_stop()) {
-            elev_set_motor_direction(DIRN_STOP);
-            orders_reset_stop();
-        }
-        
-        
-
     }
 
 
     return 0;
 }
 
-
-
- /*   if (!elev_init()) {
-        printf("Unable to initialize elevator hardware!\n");
-        return 1;
-    }
-
-    printf("Press STOP button to stop elevator and exit program.\n");
-
-
-    while (1) {
-
-        if (orders_check_order()){
-            int floor = get_floor();
-            int button_type = get_button_type();
-            orders_set_order(button_type, floor);
-        }
-        
-
-        // Stop elevator and exit program if the stop button is pressed
-        if (orders_set_stop()) {
-            elev_set_motor_direction(DIRN_STOP);
-            orders_reset_stop();
-        }
-        
-    }*/

@@ -12,15 +12,25 @@
 #include <time.h>
 
 
+
 //åpner dør i 3sek
-void orders_open_door(){
+void orders_open_door(int last_Floor){
     timer_start_timer();
     elev_set_door_open_lamp(1);
     while(!timer_check_timer()){
-        queue_add_to_queue();
+        queue_add_to_queue(last_Floor);
     }
     elev_set_door_open_lamp(0);
 }
+
+
+int orders_update_last_Floor(int last_Floor){
+    if(elev_get_floor_sensor_signal() != -1){
+        last_Floor = elev_get_floor_sensor_signal();
+    }
+    return last_Floor;
+}
+
 
 //setter stopplys
 int orders_set_stop(){
@@ -71,7 +81,7 @@ void orders_start_elev(int direction){
     orders_reset_stop();
 }
 
-void orders_set_order(elev_button_type_t button, int req_floor){
+/*void orders_set_order(elev_button_type_t button, int req_floor){
 
     //finner ut hvor vi er og hvor vi skal
     while(!elev_get_button_signal(button, req_floor)){
@@ -91,7 +101,7 @@ void orders_set_order(elev_button_type_t button, int req_floor){
     elev_set_button_lamp(button,req_floor,0);
     orders_open_door();
 }
-
+*/
 
 
 

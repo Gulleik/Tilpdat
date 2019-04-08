@@ -23,3 +23,5 @@ void orders_open_door();
 int orders_set_stop();
 
 int orders_reset_stop();
+
+int orders_update_last_Floor(int last_Floor);
