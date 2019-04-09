@@ -49,8 +49,16 @@ void queue_remove_from_queue(int direction){
 
 }
 
-bool queue_check_orders_above(){
-    int floor = elev_get_floor_sensor_signal();
+bool queue_check_orders_above(int req_floor){
+    int floor;
+    if (elev_get_floor_sensor_signal() == -1){
+        floor = req_floor;
+    }
+    else{
+        floor = elev_get_floor_sensor_signal();
+    }
+    
+    
     if (floor == 3){
         return false;
     }
@@ -68,8 +76,14 @@ bool queue_check_orders_above(){
 
 }
 
-bool queue_check_orders_below(){
-    int floor = elev_get_floor_sensor_signal();
+bool queue_check_orders_below(int req_floor){
+    int floor;
+    if (elev_get_floor_sensor_signal() == -1){
+        floor = req_floor;
+    }
+    else{
+        floor = elev_get_floor_sensor_signal();
+    }
 
     if (floor == 0){
         return false;
@@ -89,13 +103,13 @@ bool queue_check_orders_below(){
 
 int queue_next_action(int direction){
 
-
+    int floor = elev_get_floor_sensor_signal();
     //hvis heisen er på vei opp, sjekker neste action
     if(direction == 1){
-        if(queue_check_orders_above()){
+        if(queue_check_orders_above(floor)){
             return 1;
         }
-        else if(queue_check_orders_below()){
+        else if(queue_check_orders_below(floor)){
                 return -1;
         }
         else{
@@ -104,10 +118,10 @@ int queue_next_action(int direction){
     }
     //hvis heisen er på vei ned, sjekker neste action
     else{
-        if(queue_check_orders_below()){
+        if(queue_check_orders_below(floor)){
             return -1;
         }
-        else if(queue_check_orders_above()){
+        else if(queue_check_orders_above(floor)){
                 return 1;
         }
         else{
@@ -122,10 +136,10 @@ bool queue_check_floor(int direction){
     for(j=0;j<N_BUTTONS;j++){
         if(floor != -1){
             if(queue_matrix[floor][j]){
-                if ((j == 1 && direction == 1 && queue_check_orders_above())){
+                if ((j == 1 && direction == 1 && queue_check_orders_above(floor))){
                      return false;
                }
-                 else if ((j == 0 && direction == -1 && queue_check_orders_below() )){
+                 else if ((j == 0 && direction == -1 && queue_check_orders_below(floor) )){
                       return false;
                 
                 }
@@ -149,4 +163,43 @@ void queue_reset_queue(){
             }
         }
     }
+}
+
+
+
+int queue_next_floor(int last_floor, int direction){
+    if (direction == 1){
+        return last_floor + 1;
+    }
+    else if (direction == - 1){
+        return last_floor - 1;
+    }
+    return last_floor;
+}
+
+
+int queue_next_action_undefined_floor(int direction, int last_floor, int next_floor){
+    if (direction == 1){
+        if (queue_check_orders_above(last_floor)){
+            return 1;
+        }
+        else if (queue_check_orders_below(next_floor)){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+    else if (direction == -1){
+        if (queue_check_orders_above(next_floor)){
+            return 1;
+        }
+        else if (queue_check_orders_below(last_floor)){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+    return 0;
 }
