@@ -25,6 +25,7 @@ int main() {
     int state = 0;
     int direction = 0;
     int last_Floor = 0;
+    int next_floor = 0;
 
     while(1){
         
@@ -32,10 +33,20 @@ int main() {
         switch (state) {
             case IDLE:
                last_Floor = orders_update_last_Floor(last_Floor);
+                
                if(queue_add_to_queue(last_Floor) && (elev_get_floor_sensor_signal() != -1)){
                    state = REACHED_FLOOR;
                }
-               direction = queue_next_action(direction);
+                 
+               else if (elev_get_floor_sensor_signal() == -1){
+                   next_floor = queue_next_floor(last_Floor, direction);
+                   direction = queue_next_action_undefined_floor(direction, last_floor, next_floor);
+               }
+               
+               else {
+                    direction = queue_next_action(direction);
+               }
+    
                if(direction!=0){
                    state = ELEV_MOVE;
                }
