@@ -14,9 +14,9 @@ typedef enum state_machine {
 
 void queue_remove_from_queue();
 
-bool queue_check_orders_above();
+bool queue_check_orders_above(int req_floor);
 
-bool queue_check_orders_below();
+bool queue_check_orders_below(int req_floor);
 
 int queue_next_action(int direction);
 
