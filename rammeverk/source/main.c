@@ -29,140 +29,80 @@ int main() {
     int next_floor = 0;
 
     while(1){
-        
+
         
         switch (state) {
+            //TILSTAND NÅR HEISEN STÅR I RO
             case IDLE:
-               last_Floor = orders_update_last_Floor(last_Floor);
-                
-               if(queue_add_to_queue(last_Floor) && (elev_get_floor_sensor_signal() != -1)){
+
+                //går til stoppstate om stopknappen er trykket inn
+                if (elev_get_stop_signal()) {
+                    state = STOP_PRESSED;           
+                }
+                //åpner døren om heisen er i etasjen den kalles til
+                if(queue_add_to_queue(last_Floor)){
                    state = REACHED_FLOOR;
-               }
-                 
-               else if (elev_get_floor_sensor_signal() == -1){
-                   next_floor = queue_next_floor(last_Floor, direction);
-                   direction = queue_next_action_undefined_floor(direction, last_Floor, next_floor);
-               }
-               
-               else if (elev_get_floor_sensor_signal() != -1) {
-                    direction = queue_next_action(direction);
-               }
-    
-               if(direction!=0){
+                }
+                //setter retning og går i kjørstate   
+                direction = orders_set_direction(direction, last_Floor, next_floor);
+                if(direction!=0){
                    state = ELEV_MOVE;
-               }
-               if (orders_set_stop()) {
-                     state = STOP_PRESSED;           
                 }
                 break;
-        
+
+            //TILSTAND NÅR HEISEN BEVEGER SEG
             case ELEV_MOVE:
+                //starter heis i riktig retning
                 orders_start_elev(direction);
                 queue_add_to_queue(last_Floor);
-                set_floor_light();
-                last_Floor = orders_update_last_Floor(last_Floor);
-                if(queue_check_floor(direction)){
-                    state = REACHED_FLOOR;
+
+                //opdaterer lys, forrige og neste etasje og evt stopperom heisen passerer en etasje
+                if(elev_get_floor_sensor_signal() != -1){
+                    set_floor_light();
+
+                    //sjekker om vi skal stoppe i en etasje vi passerer
+                    if(queue_check_floor(direction)){
+                        state = REACHED_FLOOR;
+                    }   
+                    last_Floor = orders_update_last_Floor(last_Floor);
+                    next_floor = orders_set_next_floor( last_Floor, direction);
                 }
-                if (orders_set_stop()) {
+                //går til stoppstate om stopknappen er trykket inn
+                if (elev_get_stop_signal()) {
                      state = STOP_PRESSED;          
                 }
                 break;
 
+            //TILSTAND SOM INNTREFFER NÅR VI NÅR EN ETASJE VI SKAL STOPPE I
             case REACHED_FLOOR:
-                elev_set_motor_direction(DIRN_STOP);
-                queue_remove_from_queue();
-                orders_open_door(last_Floor);
-                state = IDLE;
-                if (orders_set_stop()) {
-                     state = STOP_PRESSED;       
-                }
-                break;
-
-            case STOP_PRESSED:
-                elev_set_motor_direction(DIRN_STOP);
-                //direction = 0;
-                queue_reset_queue();
-                orders_reset_stop();
-                state = IDLE;
-                if (orders_set_stop()) {
-                     state = STOP_PRESSED;           
-                }
-                break;
-        }
-        
-    }
-
-
-    return 0;
-}
-
-
-
-
-
-/*int main() {
-    // Initialize hardware
-    if (!elev_init()) {
-        printf("Unable to initialize elevator hardware!\n");
-        return 1;
-    }
-
-    printf("Press STOP button to stop elevator and exit program.\n");
-
-    int state = 0;
-    int direction = 0;
-    int last_Floor = 0;
-
-    while(1){
-        
-        
-        switch (state) {
-            case IDLE:
-               last_Floor = orders_update_last_Floor(last_Floor);
-               if(queue_add_to_queue(last_Floor) && (elev_get_floor_sensor_signal() != -1)){
-                   state = REACHED_FLOOR;
-               }
-               direction = queue_next_action(direction);
-               if(direction!=0){
-                   state = ELEV_MOVE;
-               }
-               if (orders_set_stop()) {
-                     state = STOP_PRESSED;           
-                }
-                break;
-        
-            case ELEV_MOVE:
-                orders_start_elev(direction);
-                queue_add_to_queue(last_Floor);
-                set_floor_light();
                 last_Floor = orders_update_last_Floor(last_Floor);
-                if(queue_check_floor(direction)){
-                    state = REACHED_FLOOR;
-                }
-                if (orders_set_stop()) {
-                     state = STOP_PRESSED;          
-                }
-                break;
-
-            case REACHED_FLOOR:
                 elev_set_motor_direction(DIRN_STOP);
+                set_floor_light();
                 queue_remove_from_queue();
-                orders_open_door(last_Floor);
+                orders_open_door_timed(last_Floor);
                 state = IDLE;
-                if (orders_set_stop()) {
+
+                //går til stoppstate om stopknappen er trykket inn
+                if (elev_get_stop_signal()) {
                      state = STOP_PRESSED;       
                 }
                 break;
 
+            //TILSTAND OM STOP HAR BLITT TRYKKET INN
             case STOP_PRESSED:
+                elev_set_stop_lamp(1);
                 elev_set_motor_direction(DIRN_STOP);
+                if(elev_get_floor_sensor_signal() != -1){
+                    orders_open_door();
+                }
                 direction = 0;
                 queue_reset_queue();
-                orders_reset_stop();
-                state = IDLE;
-                if (orders_set_stop()) {
-                     state = STOP_PRESSED;           
+                if (!elev_get_stop_signal()){
+                    state = IDLE;
+                    elev_set_stop_lamp(0);
+                    if(elev_get_floor_sensor_signal() != -1){
+                        orders_open_door_timed(last_Floor);
+                    }
                 }
                 break;
         }
@@ -173,4 +113,3 @@ int main() {
     return 0;
 }
 
-*/

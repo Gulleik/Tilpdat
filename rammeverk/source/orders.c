@@ -14,38 +14,81 @@
 
 
 //åpner dør i 3sek
-void orders_open_door(int last_Floor){
+void orders_open_door_timed(int last_Floor){
     timer_start_timer();
     elev_set_door_open_lamp(1);
     while(!timer_check_timer()){
         queue_add_to_queue(last_Floor);
+        if(elev_get_stop_signal()){
+            break;
+        }
     }
     elev_set_door_open_lamp(0);
 }
 
+//bestemmer direction om vi er i en definert tilstand
+int orders_set_direction_defined_floor(int direction){
 
+    int floor = elev_get_floor_sensor_signal();
+    //hvis heisen er på vei opp, sjekker neste action
+    if(direction == 1){
+        if(queue_check_orders_above(floor)){
+            return 1;
+        }
+        else if(queue_check_orders_below(floor)){
+                return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+    //hvis heisen er på vei ned, sjekker neste action
+    else{
+        if(queue_check_orders_below(floor)){
+            return -1;
+        }
+        else if(queue_check_orders_above(floor)){
+                return 1;
+        }
+        else{
+                return 0;
+        }
+    }
+}
+
+//bestemmer direction om vi er i en udefinert tilstand
+int orders_set_direction_undefined_floor(int last_floor, int next_floor){
+    if (last_floor < next_floor){
+        if (queue_check_orders_above(last_floor)){
+            return 1;
+        }
+        else if (queue_check_orders_below(next_floor)){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+    else if (last_floor > next_floor){
+        if (queue_check_orders_above(next_floor)){
+            return 1;
+        }
+        else if (queue_check_orders_below(last_floor)){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    }
+    return 0;
+}
+
+//opdaterer siste etasje heisen var i
 int orders_update_last_Floor(int last_Floor){
     if(elev_get_floor_sensor_signal() != -1){
         last_Floor = elev_get_floor_sensor_signal();
     }
     return last_Floor;
-}
-
-
-//setter stopplys
-int orders_set_stop(){
-    if (elev_get_stop_signal()){
-        elev_set_stop_lamp(1);
-        return 1;
-    }
-    return 0;
-}
-
-//resetter stopplys
-int orders_reset_stop(){
-    while(elev_get_stop_signal());
-    elev_set_stop_lamp(0);
-    return 0;
 }
 
 //tenner etasjelys i riktig etasje
@@ -69,39 +112,44 @@ bool orders_check_reached_floor(int req_floor){
 
 //starter heisen i riktig retning
 void orders_start_elev(int direction){
-    if(direction == 1 && !(orders_set_stop())){
+    if(direction == 1){
         elev_set_motor_direction(DIRN_UP);      
     }
-    else if(direction ==-1 && !(orders_set_stop())){
+    else if(direction ==-1 ){
         elev_set_motor_direction(DIRN_DOWN);
     }
     else{
          elev_set_motor_direction(DIRN_STOP);
     }
-    orders_reset_stop();
 }
 
-/*void orders_set_order(elev_button_type_t button, int req_floor){
-
-    //finner ut hvor vi er og hvor vi skal
-    while(!elev_get_button_signal(button, req_floor)){
-        while(elev_get_stop_signal());
+//bestemmer retning heisen skal gå i
+int orders_set_direction(int direction, int last_Floor, int next_floor){
+    if (elev_get_floor_sensor_signal() == -1){
+        direction = orders_set_direction_undefined_floor( last_Floor, next_floor);
+        return direction;
     }
-
-    //starter heisen i riktig retning
-    orders_start_elev(req_floor);
-
-    bool reached_floor = orders_check_reached_floor(req_floor);
-    while(!reached_floor && !elev_get_stop_signal()) {
-        reached_floor = orders_check_reached_floor(req_floor);
-        set_floor_light();
+    else if (elev_get_floor_sensor_signal() != -1) {
+        direction = orders_set_direction_defined_floor(direction);
+        return direction;
     }
-    
-    elev_set_motor_direction(DIRN_STOP);
-    elev_set_button_lamp(button,req_floor,0);
-    orders_open_door();
+    else{
+        return 0;
+    }
 }
-*/
 
+//bestemmer hvilken etasje heisen er på vei mot
+int orders_set_next_floor(int last_floor, int direction){
+    if (direction == 1){
+        return last_floor + 1;
+    }
+    else if (direction == - 1){
+        return last_floor - 1;
+    }
+    return last_floor;
+}
 
-
+//åpner døren
+void orders_open_door(){
+    elev_set_door_open_lamp(1);
+}
