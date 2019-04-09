@@ -113,3 +113,4 @@ int main() {
     return 0;
 }
 
+//gullis er løk
