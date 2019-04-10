@@ -84,31 +84,21 @@ int orders_set_direction_undefined_floor(int last_floor, int next_floor){
 }
 
 //opdaterer siste etasje heisen var i
-int orders_update_last_Floor(int last_Floor){
+int orders_update_last_floor(int last_floor){
     if(elev_get_floor_sensor_signal() != -1){
-        last_Floor = elev_get_floor_sensor_signal();
+        last_floor = elev_get_floor_sensor_signal();
     }
-    return last_Floor;
+    return last_floor;
 }
 
 //tenner etasjelys i riktig etasje
-void set_floor_light(){
+void orders_set_floor_light(){
     int flooor = elev_get_floor_sensor_signal();
     if(flooor != -1){
         elev_set_floor_indicator(flooor);
     };
 }
 
-//sjekker om vi er i ønsket etasje
-bool orders_check_reached_floor(int req_floor){
-    int present_floor = elev_get_floor_sensor_signal();
-    if(req_floor == present_floor){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
 
 //starter heisen i riktig retning
 void orders_start_elev(int direction){
@@ -124,9 +114,9 @@ void orders_start_elev(int direction){
 }
 
 //bestemmer retning heisen skal gå i
-int orders_set_direction(int direction, int last_Floor, int next_floor){
+int orders_set_direction(int direction, int last_floor, int next_floor){
     if (elev_get_floor_sensor_signal() == -1){
-        direction = orders_set_direction_undefined_floor( last_Floor, next_floor);
+        direction = orders_set_direction_undefined_floor( last_floor, next_floor);
         return direction;
     }
     else if (elev_get_floor_sensor_signal() != -1) {
@@ -139,7 +129,7 @@ int orders_set_direction(int direction, int last_Floor, int next_floor){
 }
 
 //bestemmer hvilken etasje heisen er på vei mot
-int orders_set_next_floor(int last_floor, int direction){
+int orders_get_next_floor(int last_floor, int direction){
     if (direction == 1){
         return last_floor + 1;
     }

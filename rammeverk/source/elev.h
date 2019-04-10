@@ -1,3 +1,10 @@
+/**
+* @file
+* @brief A simple library for doing operations on memory
+* buffers consisting of integers
+*/
+
+
 // Wrapper for libComedi Elevator control.
 // These functions provides an interface to the elevators in the real time lab
 //
@@ -127,9 +134,20 @@ void elev_set_button_lamp(elev_button_type_t button, int floor, int value);
 
 #endif // #ifndef __INCLUDE_DRIVER_H__
 
-
+/**
+  Checks if a button is pressed.
+  @return 1 if button is pressed, 0 if not.
+*/
 int elev_check_order();
 
+/**
+  Gets the floor where thre is an order
+  @return Returns the floor where there is an order
+*/
 int elev_get_floor();
 
-const int elev_get_button_type();
+/**
+  Gets the type of button pressed in an order
+  @return Returns the button type in order
+*/
+int elev_get_button_type();

@@ -176,6 +176,6 @@ int elev_get_floor() {
     return button_data[0];
 }
 
-const int elev_get_button_type() {
+int elev_get_button_type() {
     return button_data[1];
 }

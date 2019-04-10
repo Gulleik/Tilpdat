@@ -1,35 +1,54 @@
-#include "channels.h"
-#include "elev.h"
-#include "io.h"
-#include "timer.h"
-
-#include <assert.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <time.h>
+/**
+* @file
+* @brief A simple library for doing operations on memory
+* buffers consisting of integers
+*/
 
 
-void orders_set_order(elev_button_type_t button, int req_floor);
+/**
+ * @brief Sets the floor light for the last visited floor.
+*/
+void orders_set_floor_light();
 
-void set_floor_light();
 
-bool orders_check_reached_floor(int req_floor);
-
+/**
+ * @brief Starts the elevator in the direction defined by the input parameter.
+ * @param direction: The direction the elevator should be moving.
+*/
 void orders_start_elev(int direction);
 
+/**
+ * @brief Opens the door for three seconds while recieving orders.
+ * @param last_floor: last floor elevator visited in case the elevator ain't at a new one
+*/
 void orders_open_door_timed(int last_floor);
 
-int orders_update_last_Floor(int last_Floor);
+/**
+ * @brief Update last_floor depending on which floor the elevator was in last
+ * @param last_floor: last floor elevator visited in case the elevator ain't at a new one
+ * @return the number of the last floor the elevator was on.
+*/
+int orders_update_last_floor(int last_floor);
 
-int orders_set_direction(int direction, int last_Floor, int next_floor);
 
-int orders_set_direction_defined_floor(int direction);
+/**
+ * @brief Finds the direction which the elevator should be moving next.
+ * @param direction: the last direction the elevator was moving
+ * @param last_floor: last floor elevator visited in order to see if elevator still is in the same floor
+ * @param next_floor: the floor the elevator was originally headed to in case its stopped between two floors
+ * @return 1 if direction should be upwards, 0 if the elevator should be standing still, and -1 if the elevator should be moving downwards
+*/
+int orders_set_direction(int direction, int last_floor, int next_floor);
 
-int orders_set_direction_undefined_floor(int last_floor, int next_floor);
+/**
+ * @brief Finds the direction which the elevator should be moving next.
+ * @param last_floor: Last floor elevator visited.
+ * @param direction: Direction the elevator is headed
+ * @return The next floor the elevator is headed to.
+*/
+int orders_get_next_floor(int last_floor, int direction);
 
-int orders_set_next_floor(int last_floor, int direction);
-
-bool orders_set_stop();
-
+/**
+ * @brief Opens door.
+*/
 void orders_open_door();
