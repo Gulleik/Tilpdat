@@ -1,0 +1,148 @@
+\hypertarget{queue_8h}{}\section{source/queue.h File Reference}
+\label{queue_8h}\index{source/queue.\+h@{source/queue.\+h}}
+
+
+A simple library for doing operations on memory buffers consisting of integers.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{queue_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef enum state\+\_\+machine {\bfseries elev\+\_\+state\+\_\+t}\hypertarget{queue_8h_a16ae473719b080c45a88aa7ce3dc9881}{}\label{queue_8h_a16ae473719b080c45a88aa7ce3dc9881}
+
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries state\+\_\+machine} \{ {\bfseries I\+D\+LE} = 0, 
+{\bfseries E\+L\+E\+V\+\_\+\+M\+O\+VE} = 1, 
+{\bfseries R\+E\+A\+C\+H\+E\+D\+\_\+\+F\+L\+O\+OR} = 2, 
+{\bfseries S\+T\+O\+P\+\_\+\+P\+R\+E\+S\+S\+ED} = 3
+ \}\hypertarget{queue_8h_a915b2902e05c4e29541a0e9973500da8}{}\label{queue_8h_a915b2902e05c4e29541a0e9973500da8}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{queue_8h_a161ef636c565977af89f20533e0b1f59}{queue\+\_\+remove\+\_\+from\+\_\+queue} ()\hypertarget{queue_8h_a161ef636c565977af89f20533e0b1f59}{}\label{queue_8h_a161ef636c565977af89f20533e0b1f59}
+
+\begin{DoxyCompactList}\small\item\em Removes all orders from current floor from the queue matrix. \end{DoxyCompactList}\item 
+bool \hyperlink{queue_8h_ae05a154576e0f550076767a5a9adf9ca}{queue\+\_\+check\+\_\+orders\+\_\+above} (int req\+\_\+floor)
+\begin{DoxyCompactList}\small\item\em If the elevator is at a defined floor it checks if there is any orders above, if not it checks if there is any orders above the requested floor. \end{DoxyCompactList}\item 
+bool \hyperlink{queue_8h_add57b7ac19f0d6b3e018e9dcb70657da}{queue\+\_\+check\+\_\+orders\+\_\+below} (int req\+\_\+floor)
+\begin{DoxyCompactList}\small\item\em If the elevator is at a defined floor it checks if there is any orders below, if not it checks if there is any orders below the requested floor. \end{DoxyCompactList}\item 
+bool \hyperlink{queue_8h_a9b768bfd1b03279193f16e9026817ef2}{queue\+\_\+check\+\_\+floor} (int direction)
+\begin{DoxyCompactList}\small\item\em Checks the queue matrix to see if the elevator should stop at the floor its passing. \end{DoxyCompactList}\item 
+void \hyperlink{queue_8h_a600fb7cf1ff3b028fcb97aa1af196065}{queue\+\_\+reset\+\_\+queue} ()\hypertarget{queue_8h_a600fb7cf1ff3b028fcb97aa1af196065}{}\label{queue_8h_a600fb7cf1ff3b028fcb97aa1af196065}
+
+\begin{DoxyCompactList}\small\item\em Deletes all orders fromthe queue matrix. \end{DoxyCompactList}\item 
+bool \hyperlink{queue_8h_a0848377e149d9a178b14d3025a0e1a31}{queue\+\_\+add\+\_\+to\+\_\+queue} (int last\+\_\+floor)
+\begin{DoxyCompactList}\small\item\em Updates the programs queue matrix with an incoming order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple library for doing operations on memory buffers consisting of integers. 
+
+
+
+\subsection{Function Documentation}
+\index{queue.\+h@{queue.\+h}!queue\+\_\+add\+\_\+to\+\_\+queue@{queue\+\_\+add\+\_\+to\+\_\+queue}}
+\index{queue\+\_\+add\+\_\+to\+\_\+queue@{queue\+\_\+add\+\_\+to\+\_\+queue}!queue.\+h@{queue.\+h}}
+\subsubsection[{\texorpdfstring{queue\+\_\+add\+\_\+to\+\_\+queue(int last\+\_\+floor)}{queue_add_to_queue(int last_floor)}}]{\setlength{\rightskip}{0pt plus 5cm}bool queue\+\_\+add\+\_\+to\+\_\+queue (
+\begin{DoxyParamCaption}
+\item[{int}]{last\+\_\+floor}
+\end{DoxyParamCaption}
+)}\hypertarget{queue_8h_a0848377e149d9a178b14d3025a0e1a31}{}\label{queue_8h_a0848377e149d9a178b14d3025a0e1a31}
+
+
+Updates the programs queue matrix with an incoming order. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em last} & floor\+: Last floor elevator visited in order to see if elevator still is in the same floor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if on same floor as last floor and false if not 
+\end{DoxyReturn}
+
+
+Definition at line 24 of file queue.\+c.
+
+\index{queue.\+h@{queue.\+h}!queue\+\_\+check\+\_\+floor@{queue\+\_\+check\+\_\+floor}}
+\index{queue\+\_\+check\+\_\+floor@{queue\+\_\+check\+\_\+floor}!queue.\+h@{queue.\+h}}
+\subsubsection[{\texorpdfstring{queue\+\_\+check\+\_\+floor(int direction)}{queue_check_floor(int direction)}}]{\setlength{\rightskip}{0pt plus 5cm}bool queue\+\_\+check\+\_\+floor (
+\begin{DoxyParamCaption}
+\item[{int}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{queue_8h_a9b768bfd1b03279193f16e9026817ef2}{}\label{queue_8h_a9b768bfd1b03279193f16e9026817ef2}
+
+
+Checks the queue matrix to see if the elevator should stop at the floor its passing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & Direction which the elevator is moving. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if there is an order to be handeled on the floor, false if not. 
+\end{DoxyReturn}
+
+
+Definition at line 109 of file queue.\+c.
+
+\index{queue.\+h@{queue.\+h}!queue\+\_\+check\+\_\+orders\+\_\+above@{queue\+\_\+check\+\_\+orders\+\_\+above}}
+\index{queue\+\_\+check\+\_\+orders\+\_\+above@{queue\+\_\+check\+\_\+orders\+\_\+above}!queue.\+h@{queue.\+h}}
+\subsubsection[{\texorpdfstring{queue\+\_\+check\+\_\+orders\+\_\+above(int req\+\_\+floor)}{queue_check_orders_above(int req_floor)}}]{\setlength{\rightskip}{0pt plus 5cm}bool queue\+\_\+check\+\_\+orders\+\_\+above (
+\begin{DoxyParamCaption}
+\item[{int}]{req\+\_\+floor}
+\end{DoxyParamCaption}
+)}\hypertarget{queue_8h_ae05a154576e0f550076767a5a9adf9ca}{}\label{queue_8h_ae05a154576e0f550076767a5a9adf9ca}
+
+
+If the elevator is at a defined floor it checks if there is any orders above, if not it checks if there is any orders above the requested floor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em req\+\_\+floor} & Requested floor, only used if the elevator is in an undefined state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if there is an order to be handeled above, false if there are no orders. 
+\end{DoxyReturn}
+
+
+Definition at line 55 of file queue.\+c.
+
+\index{queue.\+h@{queue.\+h}!queue\+\_\+check\+\_\+orders\+\_\+below@{queue\+\_\+check\+\_\+orders\+\_\+below}}
+\index{queue\+\_\+check\+\_\+orders\+\_\+below@{queue\+\_\+check\+\_\+orders\+\_\+below}!queue.\+h@{queue.\+h}}
+\subsubsection[{\texorpdfstring{queue\+\_\+check\+\_\+orders\+\_\+below(int req\+\_\+floor)}{queue_check_orders_below(int req_floor)}}]{\setlength{\rightskip}{0pt plus 5cm}bool queue\+\_\+check\+\_\+orders\+\_\+below (
+\begin{DoxyParamCaption}
+\item[{int}]{req\+\_\+floor}
+\end{DoxyParamCaption}
+)}\hypertarget{queue_8h_add57b7ac19f0d6b3e018e9dcb70657da}{}\label{queue_8h_add57b7ac19f0d6b3e018e9dcb70657da}
+
+
+If the elevator is at a defined floor it checks if there is any orders below, if not it checks if there is any orders below the requested floor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em req\+\_\+floor} & Requested floor, only used if the elevator is in an undefined state \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if there is an order to be handeled below, false if there are no orders. 
+\end{DoxyReturn}
+
+
+Definition at line 83 of file queue.\+c.
+

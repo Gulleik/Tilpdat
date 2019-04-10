@@ -1,0 +1,160 @@
+\hypertarget{orders_8h}{}\section{source/orders.h File Reference}
+\label{orders_8h}\index{source/orders.\+h@{source/orders.\+h}}
+
+
+A simple library for doing operations on memory buffers consisting of integers.  
+
+
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{orders_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{orders_8h_adddb42a1c068e13a8035daecf4656230}{orders\+\_\+set\+\_\+floor\+\_\+light} ()\hypertarget{orders_8h_adddb42a1c068e13a8035daecf4656230}{}\label{orders_8h_adddb42a1c068e13a8035daecf4656230}
+
+\begin{DoxyCompactList}\small\item\em Sets the floor light for the last visited floor. \end{DoxyCompactList}\item 
+void \hyperlink{orders_8h_a08d4a7790768e59d5b6108a67ff3a3e8}{orders\+\_\+start\+\_\+elev} (int direction)
+\begin{DoxyCompactList}\small\item\em Starts the elevator in the direction defined by the input parameter. \end{DoxyCompactList}\item 
+void \hyperlink{orders_8h_ab46c6a5bc3d1c03fdcad668444daf2e1}{orders\+\_\+open\+\_\+door\+\_\+timed} (int last\+\_\+floor)
+\begin{DoxyCompactList}\small\item\em Opens the door for three seconds while recieving orders. \end{DoxyCompactList}\item 
+int \hyperlink{orders_8h_ae1a9f09e3aa859db01db65d4b683ebbd}{orders\+\_\+update\+\_\+last\+\_\+floor} (int last\+\_\+floor)
+\begin{DoxyCompactList}\small\item\em Update last\+\_\+floor depending on which floor the elevator was in last. \end{DoxyCompactList}\item 
+int \hyperlink{orders_8h_a6d2dc16203975cb12c63802b03a4c8bb}{orders\+\_\+set\+\_\+direction} (int direction, int last\+\_\+floor, int next\+\_\+floor)
+\begin{DoxyCompactList}\small\item\em Finds the direction which the elevator should be moving next. \end{DoxyCompactList}\item 
+int \hyperlink{orders_8h_a6a7c7081c3a77e72473f8c7af2893564}{orders\+\_\+get\+\_\+next\+\_\+floor} (int last\+\_\+floor, int direction)
+\begin{DoxyCompactList}\small\item\em Finds the direction which the elevator should be moving next. \end{DoxyCompactList}\item 
+void \hyperlink{orders_8h_a05250b7e826b9d398ec2fd6ae4b919d6}{orders\+\_\+open\+\_\+door} ()\hypertarget{orders_8h_a05250b7e826b9d398ec2fd6ae4b919d6}{}\label{orders_8h_a05250b7e826b9d398ec2fd6ae4b919d6}
+
+\begin{DoxyCompactList}\small\item\em Opens door. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A simple library for doing operations on memory buffers consisting of integers. 
+
+
+
+\subsection{Function Documentation}
+\index{orders.\+h@{orders.\+h}!orders\+\_\+get\+\_\+next\+\_\+floor@{orders\+\_\+get\+\_\+next\+\_\+floor}}
+\index{orders\+\_\+get\+\_\+next\+\_\+floor@{orders\+\_\+get\+\_\+next\+\_\+floor}!orders.\+h@{orders.\+h}}
+\subsubsection[{\texorpdfstring{orders\+\_\+get\+\_\+next\+\_\+floor(int last\+\_\+floor, int direction)}{orders_get_next_floor(int last_floor, int direction)}}]{\setlength{\rightskip}{0pt plus 5cm}int orders\+\_\+get\+\_\+next\+\_\+floor (
+\begin{DoxyParamCaption}
+\item[{int}]{last\+\_\+floor, }
+\item[{int}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{orders_8h_a6a7c7081c3a77e72473f8c7af2893564}{}\label{orders_8h_a6a7c7081c3a77e72473f8c7af2893564}
+
+
+Finds the direction which the elevator should be moving next. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em last\+\_\+floor} & Last floor elevator visited. \\
+\hline
+{\em direction} & Direction the elevator is headed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the next floor the elevator is headed to. 
+\end{DoxyReturn}
+
+
+Definition at line 132 of file orders.\+c.
+
+\index{orders.\+h@{orders.\+h}!orders\+\_\+open\+\_\+door\+\_\+timed@{orders\+\_\+open\+\_\+door\+\_\+timed}}
+\index{orders\+\_\+open\+\_\+door\+\_\+timed@{orders\+\_\+open\+\_\+door\+\_\+timed}!orders.\+h@{orders.\+h}}
+\subsubsection[{\texorpdfstring{orders\+\_\+open\+\_\+door\+\_\+timed(int last\+\_\+floor)}{orders_open_door_timed(int last_floor)}}]{\setlength{\rightskip}{0pt plus 5cm}void orders\+\_\+open\+\_\+door\+\_\+timed (
+\begin{DoxyParamCaption}
+\item[{int}]{last\+\_\+floor}
+\end{DoxyParamCaption}
+)}\hypertarget{orders_8h_ab46c6a5bc3d1c03fdcad668444daf2e1}{}\label{orders_8h_ab46c6a5bc3d1c03fdcad668444daf2e1}
+
+
+Opens the door for three seconds while recieving orders. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em last\+\_\+floor} & last floor elevator visited in case the elevator ain\textquotesingle{}t at a new one \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 17 of file orders.\+c.
+
+\index{orders.\+h@{orders.\+h}!orders\+\_\+set\+\_\+direction@{orders\+\_\+set\+\_\+direction}}
+\index{orders\+\_\+set\+\_\+direction@{orders\+\_\+set\+\_\+direction}!orders.\+h@{orders.\+h}}
+\subsubsection[{\texorpdfstring{orders\+\_\+set\+\_\+direction(int direction, int last\+\_\+floor, int next\+\_\+floor)}{orders_set_direction(int direction, int last_floor, int next_floor)}}]{\setlength{\rightskip}{0pt plus 5cm}int orders\+\_\+set\+\_\+direction (
+\begin{DoxyParamCaption}
+\item[{int}]{direction, }
+\item[{int}]{last\+\_\+floor, }
+\item[{int}]{next\+\_\+floor}
+\end{DoxyParamCaption}
+)}\hypertarget{orders_8h_a6d2dc16203975cb12c63802b03a4c8bb}{}\label{orders_8h_a6d2dc16203975cb12c63802b03a4c8bb}
+
+
+Finds the direction which the elevator should be moving next. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & The last direction the elevator was moving. \\
+\hline
+{\em last\+\_\+floor} & Last floor elevator visited in order to see if elevator still is in the same floor \\
+\hline
+{\em next\+\_\+floor} & The floor the elevator was originally headed to in case its stopped between two floors \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if direction should be upwards, 0 if the elevator should be standing still, and -\/1 if the elevator should be moving downwards 
+\end{DoxyReturn}
+
+
+Definition at line 117 of file orders.\+c.
+
+\index{orders.\+h@{orders.\+h}!orders\+\_\+start\+\_\+elev@{orders\+\_\+start\+\_\+elev}}
+\index{orders\+\_\+start\+\_\+elev@{orders\+\_\+start\+\_\+elev}!orders.\+h@{orders.\+h}}
+\subsubsection[{\texorpdfstring{orders\+\_\+start\+\_\+elev(int direction)}{orders_start_elev(int direction)}}]{\setlength{\rightskip}{0pt plus 5cm}void orders\+\_\+start\+\_\+elev (
+\begin{DoxyParamCaption}
+\item[{int}]{direction}
+\end{DoxyParamCaption}
+)}\hypertarget{orders_8h_a08d4a7790768e59d5b6108a67ff3a3e8}{}\label{orders_8h_a08d4a7790768e59d5b6108a67ff3a3e8}
+
+
+Starts the elevator in the direction defined by the input parameter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & The direction the elevator should be moving. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 104 of file orders.\+c.
+
+\index{orders.\+h@{orders.\+h}!orders\+\_\+update\+\_\+last\+\_\+floor@{orders\+\_\+update\+\_\+last\+\_\+floor}}
+\index{orders\+\_\+update\+\_\+last\+\_\+floor@{orders\+\_\+update\+\_\+last\+\_\+floor}!orders.\+h@{orders.\+h}}
+\subsubsection[{\texorpdfstring{orders\+\_\+update\+\_\+last\+\_\+floor(int last\+\_\+floor)}{orders_update_last_floor(int last_floor)}}]{\setlength{\rightskip}{0pt plus 5cm}int orders\+\_\+update\+\_\+last\+\_\+floor (
+\begin{DoxyParamCaption}
+\item[{int}]{last\+\_\+floor}
+\end{DoxyParamCaption}
+)}\hypertarget{orders_8h_ae1a9f09e3aa859db01db65d4b683ebbd}{}\label{orders_8h_ae1a9f09e3aa859db01db65d4b683ebbd}
+
+
+Update last\+\_\+floor depending on which floor the elevator was in last. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em last\+\_\+floor} & Last floor elevator visited in case the elevator ain\textquotesingle{}t at a new one. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the last floor the elevator was at. 
+\end{DoxyReturn}
+
+
+Definition at line 87 of file orders.\+c.
+
