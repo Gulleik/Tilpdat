@@ -1,7 +1,6 @@
 /**
 * @file
-* @brief A simple library for doing operations on memory
-* buffers consisting of integers
+* @brief Library of functions used in time dependent operations
 */
 
 
