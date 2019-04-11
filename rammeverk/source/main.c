@@ -35,7 +35,8 @@ int main() {
 
                 //går til stoppstate om stopknappen er trykket inn
                 if (elev_get_stop_signal()) {
-                    state = STOP_PRESSED;           
+                    state = STOP_PRESSED;
+                    break;           
                 }
                 //åpner døren om heisen er i etasjen den kalles til
                 if(queue_add_to_queue(last_floor)){
@@ -43,7 +44,7 @@ int main() {
                 }
                 //setter retning og går i kjørstate   
                 direction = orders_set_direction(direction, last_floor, next_floor);
-                if(direction!=0){
+                if(direction != 0 && !(io_read_bit(LIGHT_DOOR_OPEN))){
                    state = ELEV_MOVE;
                 }
                 break;
@@ -54,6 +55,7 @@ int main() {
                 orders_start_elev(direction);
                 queue_add_to_queue(last_floor);
 
+
                 //opdaterer lys, forrige og neste etasje og evt stopperom heisen passerer en etasje
                 if(elev_get_floor_sensor_signal() != -1){
                     orders_set_floor_light();
@@ -63,7 +65,7 @@ int main() {
                         state = REACHED_FLOOR;
                     }   
                     last_floor = orders_update_last_floor(last_floor);
-                    next_floor = orders_get_next_floor( last_floor, direction);
+                    next_floor = orders_get_next_floor(last_floor, direction);
                 }
                 //går til stoppstate om stopknappen er trykket inn
                 if (elev_get_stop_signal()) {
@@ -74,6 +76,7 @@ int main() {
             //TILSTAND SOM INNTREFFER NÅR VI NÅR EN ETASJE VI SKAL STOPPE I
             case REACHED_FLOOR:
                 last_floor = orders_update_last_floor(last_floor);
+                next_floor = orders_get_next_floor(last_floor, direction);
                 elev_set_motor_direction(DIRN_STOP);
                 orders_set_floor_light();
                 queue_remove_from_queue();
@@ -88,10 +91,12 @@ int main() {
 
             //TILSTAND OM STOP HAR BLITT TRYKKET INN
             case STOP_PRESSED:
+    
                 elev_set_stop_lamp(1);
                 elev_set_motor_direction(DIRN_STOP);
+
                 if(elev_get_floor_sensor_signal() != -1){
-                    orders_open_door();
+                    orders_set_door_lamp(1);
                 }
                 direction = 0;
                 queue_reset_queue();
@@ -101,6 +106,7 @@ int main() {
                     if(elev_get_floor_sensor_signal() != -1){
                         orders_open_door_timed(last_floor);
                     }
+                    orders_set_door_lamp(0);
                 }
                 break;
         }

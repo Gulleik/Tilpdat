@@ -109,13 +109,13 @@ bool queue_check_orders_below(int req_floor){
 bool queue_check_floor(int direction){
     int floor = elev_get_floor_sensor_signal();
     int j;
-    for(j=0;j<N_BUTTONS;j++){
+    for(j = 0;j < N_BUTTONS;j++){
         if(floor != -1){
             if(queue_matrix[floor][j]){
                 if ((j == 1 && direction == 1 && queue_check_orders_above(floor))){
                      return false;
                }
-                 else if ((j == 0 && direction == -1 && queue_check_orders_below(floor) )){
+                if ((j == 0 && direction == -1 && queue_check_orders_below(floor) && !(queue_matrix[floor][j+1]))){
                       return false;
                 
                 }

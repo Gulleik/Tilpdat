@@ -48,7 +48,8 @@ int orders_set_direction(int direction, int last_floor, int next_floor);
 int orders_get_next_floor(int last_floor, int direction);
 
 /**
- * @brief Opens door.
+ * @brief Sets door lamp according to input value.
+ * @param value: value defining if door lamp should be turned on or off
 */
-void orders_open_door();
+void orders_set_door_lamp(int value);
 

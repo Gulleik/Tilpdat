@@ -93,9 +93,9 @@ int orders_update_last_floor(int last_floor){
 
 //tenner etasjelys i riktig etasje
 void orders_set_floor_light(){
-    int flooor = elev_get_floor_sensor_signal();
-    if(flooor != -1){
-        elev_set_floor_indicator(flooor);
+    int floor = elev_get_floor_sensor_signal();
+    if(floor != -1){
+        elev_set_floor_indicator(floor);
     };
 }
 
@@ -140,6 +140,6 @@ int orders_get_next_floor(int last_floor, int direction){
 }
 
 //åpner døren
-void orders_open_door(){
-    elev_set_door_open_lamp(1);
+void orders_set_door_lamp(int value){
+    elev_set_door_open_lamp(value);
 }

@@ -126,10 +126,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
 <tr class="memitem:a6a7c7081c3a77e72473f8c7af2893564"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orders_8h.html#a6a7c7081c3a77e72473f8c7af2893564">orders_get_next_floor</a> (int last_floor, int direction)</td></tr>
 <tr class="memdesc:a6a7c7081c3a77e72473f8c7af2893564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the direction which the elevator should be moving next.  <a href="#a6a7c7081c3a77e72473f8c7af2893564">More...</a><br /></td></tr>
 <tr class="separator:a6a7c7081c3a77e72473f8c7af2893564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05250b7e826b9d398ec2fd6ae4b919d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a05250b7e826b9d398ec2fd6ae4b919d6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orders_8h.html#a05250b7e826b9d398ec2fd6ae4b919d6">orders_open_door</a> ()</td></tr>
-<tr class="memdesc:a05250b7e826b9d398ec2fd6ae4b919d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens door. <br /></td></tr>
-<tr class="separator:a05250b7e826b9d398ec2fd6ae4b919d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a741c4d3eb892708577654cb9b93f6fb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orders_8h.html#a741c4d3eb892708577654cb9b93f6fb2">orders_set_door_lamp</a> (int value)</td></tr>
+<tr class="memdesc:a741c4d3eb892708577654cb9b93f6fb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets door lamp according to input value.  <a href="#a741c4d3eb892708577654cb9b93f6fb2">More...</a><br /></td></tr>
+<tr class="separator:a741c4d3eb892708577654cb9b93f6fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Library of functions for linking orders and elevator functionality. </p>
@@ -242,6 +241,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="orde
 <dl class="section return"><dt>Returns</dt><dd>1 if direction should be upwards, 0 if the elevator should be standing still, and -1 if the elevator should be moving downwards </dd></dl>
 
 <p>Definition at line <a class="el" href="orders_8c_source.html#l00117">117</a> of file <a class="el" href="orders_8c_source.html">orders.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a741c4d3eb892708577654cb9b93f6fb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void orders_set_door_lamp </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets door lamp according to input value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>value defining if door lamp should be turned on or off </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="orders_8c_source.html#l00143">143</a> of file <a class="el" href="orders_8c_source.html">orders.c</a>.</p>
 
 </div>
 </div>
